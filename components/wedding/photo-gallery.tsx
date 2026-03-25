@@ -70,19 +70,37 @@ export function PhotoGallery({ refreshTrigger }: PhotoGalleryProps) {
 
   const handleDownload = async (photo: Photo) => {
     try {
-      const response = await fetch(photo.image_url)
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
+      // Extract the storage path from the public URL
+      const url = new URL(photo.image_url)
+      const pathParts = url.pathname.split("/wedding-photos/")
+      const storagePath = pathParts[1]
+
+      if (!storagePath) {
+        // Fallback: open in new tab
+        window.open(photo.image_url, "_blank")
+        return
+      }
+
+      // Create a signed URL valid for 60 seconds so the browser can download it
+      const { data, error } = await supabase.storage
+        .from("wedding-photos")
+        .createSignedUrl(storagePath, 60, { download: true })
+
+      if (error || !data?.signedUrl) {
+        // Fallback: open in new tab
+        window.open(photo.image_url, "_blank")
+        return
+      }
+
       const a = document.createElement("a")
-      a.href = url
-      const ext = blob.type.split("/")[1] || "jpg"
-      a.download = `boda-${photo.guest?.name?.replace(/\s+/g, "-").toLowerCase() ?? "foto"}-${photo.id.slice(0, 6)}.${ext}`
+      a.href = data.signedUrl
+      a.download = `boda-${photo.guest?.name?.replace(/\s+/g, "-").toLowerCase() ?? "foto"}-${photo.id.slice(0, 6)}`
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
-      URL.revokeObjectURL(url)
     } catch (err) {
       console.error(err)
+      window.open(photo.image_url, "_blank")
     }
   }
 
