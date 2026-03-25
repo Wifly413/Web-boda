@@ -1,0 +1,230 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Luxury wedding palette: ivory, champagne, rose gold */
+  --background: oklch(0.975 0.010 80);
+  --foreground: oklch(0.20 0.016 50);
+  --card: oklch(0.998 0.003 80);
+  --card-foreground: oklch(0.20 0.016 50);
+  --popover: oklch(0.998 0.003 80);
+  --popover-foreground: oklch(0.20 0.016 50);
+  --primary: oklch(0.48 0.07 10);
+  --primary-foreground: oklch(0.99 0.003 80);
+  --secondary: oklch(0.93 0.014 78);
+  --secondary-foreground: oklch(0.30 0.016 50);
+  --muted: oklch(0.93 0.012 78);
+  --muted-foreground: oklch(0.50 0.012 55);
+  --accent: oklch(0.78 0.08 68);
+  --accent-foreground: oklch(0.20 0.016 50);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.87 0.016 78);
+  --input: oklch(0.91 0.010 78);
+  --ring: oklch(0.48 0.07 10);
+  --chart-1: oklch(0.48 0.07 10);
+  --chart-2: oklch(0.78 0.08 68);
+  --chart-3: oklch(0.65 0.05 55);
+  --chart-4: oklch(0.78 0.05 78);
+  --chart-5: oklch(0.68 0.04 10);
+  --radius: 0.75rem;
+  --gold: oklch(0.74 0.09 78);
+  --rose-petal: oklch(0.88 0.06 10);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --font-sans: 'Montserrat', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Petal fall animations — 4 variants for natural feel */
+@keyframes petalFall {
+  0%   { transform: translateY(-80px) rotate(0deg) translateX(0px)   scale(1);   opacity: 0; }
+  8%   { opacity: 0.75; }
+  88%  { opacity: 0.55; }
+  100% { transform: translateY(112vh) rotate(800deg) translateX(90px)  scale(0.8); opacity: 0; }
+}
+@keyframes petalSway {
+  0%   { transform: translateY(-80px) rotate(20deg)  translateX(0px)   scale(1);   opacity: 0; }
+  8%   { opacity: 0.65; }
+  45%  { transform: translateY(50vh)  rotate(380deg) translateX(-70px) scale(0.9); }
+  88%  { opacity: 0.45; }
+  100% { transform: translateY(112vh) rotate(740deg) translateX(50px)  scale(0.75); opacity: 0; }
+}
+@keyframes petalDrift {
+  0%   { transform: translateY(-80px) rotate(-15deg) translateX(0px)   scale(1.1); opacity: 0; }
+  8%   { opacity: 0.70; }
+  30%  { transform: translateY(28vh)  rotate(200deg) translateX(40px)  scale(1); }
+  65%  { transform: translateY(65vh)  rotate(480deg) translateX(-30px) scale(0.9); }
+  88%  { opacity: 0.50; }
+  100% { transform: translateY(112vh) rotate(660deg) translateX(20px)  scale(0.7); opacity: 0; }
+}
+@keyframes petalSpin {
+  0%   { transform: translateY(-80px) rotate(45deg)  translateX(0px)   scale(0.9); opacity: 0; }
+  8%   { opacity: 0.60; }
+  50%  { transform: translateY(52vh)  rotate(540deg) translateX(60px)  scale(1); }
+  88%  { opacity: 0.40; }
+  100% { transform: translateY(112vh) rotate(900deg) translateX(-40px) scale(0.8); opacity: 0; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes dividerExpand {
+  from { width: 0; opacity: 0; }
+  to   { width: 3rem; opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-petal-1  { animation: petalFall  9s  ease-in-out infinite; }
+.animate-petal-2  { animation: petalSway  12s ease-in-out infinite; }
+.animate-petal-3  { animation: petalDrift 8s  ease-in-out infinite; }
+.animate-petal-4  { animation: petalSpin  14s ease-in-out infinite; }
+.animate-petal-5  { animation: petalFall  7s  ease-in-out infinite; }
+.animate-petal-6  { animation: petalSway  11s ease-in-out infinite; }
+.animate-petal-7  { animation: petalDrift 13s ease-in-out infinite; }
+.animate-petal-8  { animation: petalSpin  6s  ease-in-out infinite; }
+.animate-petal-9  { animation: petalFall  15s ease-in-out infinite; }
+.animate-petal-10 { animation: petalSway  10s ease-in-out infinite; }
+.animate-petal-11 { animation: petalDrift 8s  ease-in-out infinite; }
+.animate-petal-12 { animation: petalSpin  12s ease-in-out infinite; }
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-fade-in {
+  animation: fadeIn 0.7s ease both;
+}
+.animate-scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Delays — keep element hidden until animation starts */
+.animate-delay-100 { animation-delay: 0.1s; animation-fill-mode: both; }
+.animate-delay-200 { animation-delay: 0.2s; animation-fill-mode: both; }
+.animate-delay-300 { animation-delay: 0.3s; animation-fill-mode: both; }
+.animate-delay-400 { animation-delay: 0.4s; animation-fill-mode: both; }
+.animate-delay-500 { animation-delay: 0.5s; animation-fill-mode: both; }
+.animate-delay-700 { animation-delay: 0.7s; animation-fill-mode: both; }
+.animate-delay-900 { animation-delay: 0.9s; animation-fill-mode: both; }
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--foreground) 0%,
+    oklch(0.74 0.09 78) 40%,
+    var(--foreground) 60%,
+    oklch(0.48 0.07 10) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
+}
