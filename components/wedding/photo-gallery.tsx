@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
-import { X, ChevronLeft, ChevronRight, ImageIcon, Trash2, AlertTriangle } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, ImageIcon, Trash2, AlertTriangle, Download } from "lucide-react"
 import Image from "next/image"
 
 interface Photo {
@@ -67,6 +67,42 @@ export function PhotoGallery({ refreshTrigger }: PhotoGalleryProps) {
     window.addEventListener("keydown", handler)
     return () => window.removeEventListener("keydown", handler)
   }, [lightboxIndex, photos.length])
+
+  const handleDownload = async (photo: Photo) => {
+    try {
+      // Extract the storage path from the public URL
+      const url = new URL(photo.image_url)
+      const pathParts = url.pathname.split("/wedding-photos/")
+      const storagePath = pathParts[1]
+
+      if (!storagePath) {
+        // Fallback: open in new tab
+        window.open(photo.image_url, "_blank")
+        return
+      }
+
+      // Create a signed URL valid for 60 seconds so the browser can download it
+      const { data, error } = await supabase.storage
+        .from("wedding-photos")
+        .createSignedUrl(storagePath, 60, { download: true })
+
+      if (error || !data?.signedUrl) {
+        // Fallback: open in new tab
+        window.open(photo.image_url, "_blank")
+        return
+      }
+
+      const a = document.createElement("a")
+      a.href = data.signedUrl
+      a.download = `boda-${photo.guest?.name?.replace(/\s+/g, "-").toLowerCase() ?? "foto"}-${photo.id.slice(0, 6)}`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+    } catch (err) {
+      console.error(err)
+      window.open(photo.image_url, "_blank")
+    }
+  }
 
   const handleDelete = async () => {
     if (!deleteId) return
@@ -169,14 +205,23 @@ export function PhotoGallery({ refreshTrigger }: PhotoGalleryProps) {
                   {photo.guest?.name ?? "Invitado"}
                 </p>
               </div>
-              {/* Delete button */}
-              <button
-                onClick={e => { e.stopPropagation(); setDeleteId(photo.id) }}
-                className="absolute top-2 right-2 h-7 w-7 rounded-full bg-black/30 hover:bg-destructive/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 z-10"
-                aria-label="Eliminar foto"
-              >
-                <Trash2 className="h-3.5 w-3.5 text-white" />
-              </button>
+              {/* Action buttons */}
+              <div className="absolute top-2 right-2 flex flex-col gap-1.5 z-10">
+                <button
+                  onClick={e => { e.stopPropagation(); handleDownload(photo) }}
+                  className="h-7 w-7 rounded-full bg-black/30 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200"
+                  aria-label="Descargar foto"
+                >
+                  <Download className="h-3.5 w-3.5 text-white" />
+                </button>
+                <button
+                  onClick={e => { e.stopPropagation(); setDeleteId(photo.id) }}
+                  className="h-7 w-7 rounded-full bg-black/30 hover:bg-destructive/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200"
+                  aria-label="Eliminar foto"
+                >
+                  <Trash2 className="h-3.5 w-3.5 text-white" />
+                </button>
+              </div>
             </div>
           </div>
         ))}
@@ -251,6 +296,15 @@ export function PhotoGallery({ refreshTrigger }: PhotoGalleryProps) {
             aria-label="Cerrar"
           >
             <X className="h-5 w-5 text-white" />
+          </button>
+
+          {/* Download from lightbox */}
+          <button
+            onClick={e => { e.stopPropagation(); handleDownload(photos[lightboxIndex]) }}
+            className="absolute top-5 right-32 h-10 w-10 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center transition-colors z-10"
+            aria-label="Descargar foto"
+          >
+            <Download className="h-4 w-4 text-white" />
           </button>
 
           {/* Delete from lightbox */}
